@@ -1,4 +1,4 @@
-// Program 8.4 the functional approach to string sorting
+// Program 8.4 字符串排序的功能（冒泡排序的简单实现）
 
 #define __STDC_WANT_LIB_EXT1__ 1
 #include<stdio.h>
