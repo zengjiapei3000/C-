@@ -1,4 +1,5 @@
-// an inproved calculator
+// 计算器，加入了指数乘法
+
 #define __STDC_WANT_LIB_EXT1__ 1
 #include<stdio.h>           // sandard input/output
 #include<string.h>          // for string functions
