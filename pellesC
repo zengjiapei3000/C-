@@ -1,34 +1,34 @@
 // Program 8.4 字符排序的功能（冒泡排序的简单实现）
 
-#define __STDC_WANT_LIB_EXT1__ 1         // C11可选字符串函数的支持
+#define __STDC_WANT_LIB_EXT1__ 1          // C11可选字符串函数的支持
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
 #include<string.h>
-#define BUF_LEN 256                      // 输入字符串的最大长度
-#define INIT_NSTR 2                      // 初始的字符串个数
-#define NSTR_INCR 2                      // 增加的字符串个数
+#define BUF_LEN 256                       // 输入字符串的最大长度
+#define INIT_NSTR 2                       // 初始的字符串个数
+#define NSTR_INCR 2                       // 增加的字符串个数
 
-char* str_in();                          // 用于读取字符串的函数
-void str_sort(const char**, size_t);      // Sorts an array of strings
-void swap(const char**, const char**);   // Swaps two pointers
-void str_out(const char* const*,size_t); // Outputs the strings
-void free_memory(char**, size_t);         // Free all heap memory
+char* str_in();                           // 用于读取字符串的函数
+void str_sort(const char**, size_t);      // 用于按升序来排序、存储字符串的函数
+void swap(const char**, const char**);    // 交换两个指针（冒泡排序）
+void str_out(const char* const*,size_t);  // 输出字符串的函数
+void free_memory(char**, size_t);         // 释放所有堆上的内存
 
 // 主函数 - 开始执行的地方
 int main(void)
 {
-	size_t pS_size = INIT_NSTR;                  // Count of pSelements
-	char **pS = calloc(pS_size, sizeof(char*));  // Array of string pointers
+	size_t pS_size = INIT_NSTR;                  // 初始化pS的大小
+	char **pS = calloc(pS_size, sizeof(char*));  // 在堆上创建内存给pS
 	if(!pS)
 	{
-		printf("Failed to allocate memory for string pointers.\n");
+		printf("无法为字符串指针分配内存.\n");
 		exit(1);
 	}
-	char **pTemp = NULL;                         // Temporary pointer
-	size_t str_count = 0;                        // Number of strings read
-	char *pStr = NULL;                           // String pointer
-	printf("Enter one string per line. Press Enter to end:\n");
+	char **pTemp = NULL;                         // 临时的pointer
+	size_t str_count = 0;                        // 读取的字符串计数器
+	char *pStr = NULL;                           // 字符的pointer
+	printf("每行输入一个字符串。按Enter键结束:\n");
 	while((pStr = str_in()) != NULL)
 	{
 		if(str_count == pS_size)
@@ -36,7 +36,7 @@ int main(void)
 			pS_size += NSTR_INCR;
 			if(!(pTemp = realloc(pS, pS_size*sizeof(char*))))
 			{
-				printf("Memory allocation for array of strings failed.\n");
+				printf("字符串数组的内存分配失败.\n");
 				return 2;
 			}
 			pS = pTemp;
@@ -44,9 +44,9 @@ int main(void)
 		pS[str_count++] = pStr;
 	}
 
-	str_sort(pS, str_count);    // Sort strings
-	str_out(pS, str_count);     // Output strings
-	free_memory(pS, str_count); // free all heap memory
+	str_sort(pS, str_count);         // 字符串排序
+	str_out(pS, str_count);          // 输出排序后字符串
+	free_memory(pS, str_count);      // 释放堆上内存
 	return 0;
 }
 
@@ -55,7 +55,7 @@ char* str_in(void)
 	char buf[BUF_LEN];               // 用于存储输入字符串的空间
 	if(!gets_s(buf, BUF_LEN))        // if 接收到的返回值为NULL...
 	{                                // ...终止操作
-		printf("\nError reading string.\n");
+		printf("\n读取字符串出错.\n");
 		return NULL;
 	}
 
@@ -67,7 +67,7 @@ char* str_in(void)
 	
 	if(!pString)                     // if 没有分配好内存...
 	{
-		printf("Memory allocation failure.\n");
+		printf("内存分配失败.\n");
 		return NULL;             // ...终止操作
 	}
 
@@ -77,16 +77,16 @@ char* str_in(void)
 
 void str_sort(const char **p, size_t n)
 {
-	bool sorted = false;                  // Strings sorted indicator
-	while(!sorted)                        // Loop until there are no swaps
+	bool sorted = false;                      // 字符串排序指标bool值
+	while(!sorted)                            // 循环，直到没有交换时结束
 	{
-		sorted = true;                    // Initialize to indicate no swaps
+		sorted = true;                    // 初始化，来表示没有互换
 		for(int i = 0; i < n - 1; ++i)
 		{
-			if(strcmp(p[i],p[i + 1]) > 0)
+			if(strcmp(p[i],p[i + 1]) > 0)     // 比较p[i]p和[i+1]的大小
 			{
-				sorted = false;           // Indicate we are of order
-				swap(&p[i], &p[i + 1]);   // Swap the string addresses
+				sorted = false;           // 表示一次排序结束
+				swap(&p[i], &p[i + 1]);   // 交换字符串地址
 			}
 		}
 	}
@@ -101,9 +101,9 @@ void swap(const char** p1, const char** p2)
 
 void str_out(const char* const* pStr, size_t n)
 {
-	printf("The sorted strings are:\n");
+	printf("排序后的字符串为:\n");
 	for(size_t i = 0; i < n; ++i)
-		printf("%s\n", pStr[i]);         // Display a string
+		printf("%s\n", pStr[i]);         // 展示一个字符
 }
 
 void free_memory(char **pS, size_t n)
