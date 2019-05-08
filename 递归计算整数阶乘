@@ -1,4 +1,4 @@
-// Program 9.6 计算从1到任意整数之间的所有整数之积
+//  计算从1到任意整数之间的所有整数之积
 #define __STDC_WANT_LIB_EXT1__ 1
 #include<stdio.h>
 
