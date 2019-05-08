@@ -1,85 +1,19 @@
-// Program 8.4 字符串排序的功能（冒泡排序的简单实现）
+// Program 8.4 字符排序的功能（冒泡排序的简单实现）
 
 #define __STDC_WANT_LIB_EXT1__ 1         // C11可选字符串函数的支持
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
 #include<string.h>
-#define BUF_LEN 256                      // 输入缓冲区的长度
-#define INIT_NSTR 2                      // Initial number of strings
-#define NSTR_INCR 2                      // Increment to number of strings
+#define BUF_LEN 256                      // 输入字符串的最大长度
+#define INIT_NSTR 2                      // 初始的字符串个数
+#define NSTR_INCR 2                      // 增加的字符串个数
 
-char* str_in();                          // Reads a string
-char* str_in(void)
-{
-	char buf[BUF_LEN];               // Space to store input string
-	if(!gets_s(buf, BUF_LEN))        // If NULL returned...
-	{                                // ...end the operation
-		printf("\nError reading string.\n");
-		return NULL;
-	}
-
-	if(buf[0] == '\0')               // If empty string read...
-		return NULL;             // ...end theoperation
-
-	size_t str_len = strnlen_s(buf, BUF_LEN) + 1;
-	char *pString = malloc(str_len);
-	
-	if(!pString)                     // If no memory allocated...
-	{
-		printf("Memory allocation failure.\n");
-		return NULL;                 // ...end the operation
-	}
-
-	strcpy_s(pString, str_len, buf); // Copy string read to new memory
-	return pString;
-}
-
-void swap(const char**, const char**); // Swaps two pointers
-void swap(const char** p1, const char** p2)
-{
-	const char *pT = *p1;
-	*p1 = *p2;
-	*p2 = pT;
-}
-
+char* str_in();                          // 用于读取字符串的函数
 void str_sort(const char**, size_t);      // Sorts an array of strings
-void str_sort(const char **p, size_t n)
-{
-	bool sorted = false;                  // Strings sorted indicator
-	while(!sorted)                        // Loop until there are no swaps
-	{
-		sorted = true;                    // Initialize to indicate no swaps
-		for(int i = 0; i < n - 1; ++i)
-		{
-			if(strcmp(p[i],p[i + 1]) > 0)
-			{
-				sorted = false;           // Indicate we are of order
-				swap(&p[i], &p[i + 1]);   // Swap the string addresses
-			}
-		}
-	}
-}
-
+void swap(const char**, const char**);   // Swaps two pointers
 void str_out(const char* const*,size_t); // Outputs the strings
-void str_out(const char* const* pStr, size_t n)
-{
-	printf("The sorted strings are:\n");
-	for(size_t i = 0; i < n; ++i)
-		printf("%s\n", pStr[i]);         // Display a string
-}
-
 void free_memory(char**, size_t);         // Free all heap memory
-void free_memory(char **pS, size_t n)
-{
-	for(size_t i = 0; i < n; ++i)
-	{
-		free(pS[i]);
-		pS[i] = NULL;
-	}
-	free(pS);
-	pS = NULL;
-}
 
 // 主函数 - 开始执行的地方
 int main(void)
@@ -114,4 +48,71 @@ int main(void)
 	str_out(pS, str_count);     // Output strings
 	free_memory(pS, str_count); // free all heap memory
 	return 0;
+}
+
+char* str_in(void)
+{
+	char buf[BUF_LEN];               // 用于存储输入字符串的空间
+	if(!gets_s(buf, BUF_LEN))        // if 接收到的返回值为NULL...
+	{                                // ...终止操作
+		printf("\nError reading string.\n");
+		return NULL;
+	}
+
+	if(buf[0] == '\0')               // if 读取到空字符...
+		return NULL;             // ...终止操作
+
+	size_t str_len = strnlen_s(buf, BUF_LEN) + 1;
+	char *pString = malloc(str_len);
+	
+	if(!pString)                     // if 没有分配好内存...
+	{
+		printf("Memory allocation failure.\n");
+		return NULL;             // ...终止操作
+	}
+
+	strcpy_s(pString, str_len, buf); // 复制字符读入到pString里
+	return pString;
+}
+
+void str_sort(const char **p, size_t n)
+{
+	bool sorted = false;                  // Strings sorted indicator
+	while(!sorted)                        // Loop until there are no swaps
+	{
+		sorted = true;                    // Initialize to indicate no swaps
+		for(int i = 0; i < n - 1; ++i)
+		{
+			if(strcmp(p[i],p[i + 1]) > 0)
+			{
+				sorted = false;           // Indicate we are of order
+				swap(&p[i], &p[i + 1]);   // Swap the string addresses
+			}
+		}
+	}
+}
+
+void swap(const char** p1, const char** p2)
+{
+	const char *pT = *p1;
+	*p1 = *p2;
+	*p2 = pT;
+}
+
+void str_out(const char* const* pStr, size_t n)
+{
+	printf("The sorted strings are:\n");
+	for(size_t i = 0; i < n; ++i)
+		printf("%s\n", pStr[i]);         // Display a string
+}
+
+void free_memory(char **pS, size_t n)
+{
+	for(size_t i = 0; i < n; ++i)
+	{
+		free(pS[i]);
+		pS[i] = NULL;
+	}
+	free(pS);
+	pS = NULL;
 }
