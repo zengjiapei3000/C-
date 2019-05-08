@@ -1,15 +1,15 @@
 // Program 8.4 字符串排序的功能（冒泡排序的简单实现）
 
-#define __STDC_WANT_LIB_EXT1__ 1
+#define __STDC_WANT_LIB_EXT1__ 1         // C11可选字符串函数的支持
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
 #include<string.h>
-#define BUF_LEN 256  // Input buffer length
-#define INIT_NSTR 2  // Initial number of strings
-#define NSTR_INCR 2  // Increment to number of strings
+#define BUF_LEN 256                      // 输入缓冲区的长度
+#define INIT_NSTR 2                      // Initial number of strings
+#define NSTR_INCR 2                      // Increment to number of strings
 
-char* str_in();                      // Reads a string
+char* str_in();                          // Reads a string
 char* str_in(void)
 {
 	char buf[BUF_LEN];               // Space to store input string
@@ -20,7 +20,7 @@ char* str_in(void)
 	}
 
 	if(buf[0] == '\0')               // If empty string read...
-		return NULL;                 // ...end theoperation
+		return NULL;             // ...end theoperation
 
 	size_t str_len = strnlen_s(buf, BUF_LEN) + 1;
 	char *pString = malloc(str_len);
@@ -81,19 +81,19 @@ void free_memory(char **pS, size_t n)
 	pS = NULL;
 }
 
-// Function main - execution starts here
+// 主函数 - 开始执行的地方
 int main(void)
 {
-	size_t pS_size = INIT_NSTR;  // Count of pSelements
-	char **pS = calloc(pS_size, sizeof(char*)); // Array of string pointers
+	size_t pS_size = INIT_NSTR;                  // Count of pSelements
+	char **pS = calloc(pS_size, sizeof(char*));  // Array of string pointers
 	if(!pS)
 	{
 		printf("Failed to allocate memory for string pointers.\n");
 		exit(1);
 	}
-	char **pTemp = NULL;         // Temporary pointer
-	size_t str_count = 0;        // Number of strings read
-	char *pStr = NULL;           // String pointer
+	char **pTemp = NULL;                         // Temporary pointer
+	size_t str_count = 0;                        // Number of strings read
+	char *pStr = NULL;                           // String pointer
 	printf("Enter one string per line. Press Enter to end:\n");
 	while((pStr = str_in()) != NULL)
 	{
