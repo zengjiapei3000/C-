@@ -1,4 +1,5 @@
-// 单向链表来用升序遍历马儿的结构
+// 单向链表来用升序遍历数据结构Horse
+
 #define __STDC_WANT_LIB_EXT1__ 1
 #include<stdio.h>
 #include<ctype.h>
