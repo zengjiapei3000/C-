@@ -7,9 +7,9 @@ unsigned long long factorial(unsigned long long);
 int main(void)
 {
 	unsigned long long number = 0LL;
-	printf("Enter an interger value: ");
+	printf("输入一个整数值: ");
 	scanf_s("%llu", &number);
-	printf("The factorial of %llu is %llu\n", number, factorial(number));
+	printf("%llu 的阶乘为 %llu\n", number, factorial(number));
 	return 0;
 }
 
